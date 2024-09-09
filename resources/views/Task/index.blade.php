@@ -69,15 +69,16 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Laravel CSRF token
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                body: JSON.stringify({ is_done: true }) // Set 'is_done' to true
+                body: JSON.stringify({ is_done: true }) 
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Update the Alpine state to reflect the completed status
+                    
                     this.completed = true;
+                    // window.location.reload();
                 } else {
                     alert('Failed to update task. Please try again.');
                 }

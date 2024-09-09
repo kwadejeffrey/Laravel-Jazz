@@ -27,6 +27,11 @@ class TaskController extends Controller
     }
 
 
+    /**
+     * Summary of create
+     * @param \Illuminate\Http\Request $request
+     * @return mixed|\Illuminate\Http\JsonResponse
+     */
     public function create(Request $request)
     {
         try {
@@ -44,6 +49,25 @@ class TaskController extends Controller
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return response()->json(['success' => false, 'error' => 'Failed to create task']);
+        }
+    }
+
+    /**
+     * Summary of markAsCompleted
+     * @param mixed $id
+     * @return mixed|\Illuminate\Http\JsonResponse
+     */
+    public function markAsCompleted($id)
+    {
+        try {
+            $task = Task::findOrFail($id);
+            $task->is_done = true;
+            $task->save();
+
+            return response()->json(['success' => true]);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['success' => false, 'error' => 'Failed to update task']);
         }
     }
 }
