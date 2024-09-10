@@ -7,6 +7,7 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 class TaskController extends Controller
 {
@@ -43,12 +44,27 @@ class TaskController extends Controller
             ]);
 
             // dd($data);
-            Task::create($data);
+            $created = Task::create($data);
 
-            return response()->json(['success' => true, 'redirect' => route('task.index')]);
+            if ($created) {
+                // $res = Http::post('http://127.0.0.1:5001/api/tasks', $data);
+                $res = Http::post('http://host.docker.internal:5001/api/tasks', $data);
+
+
+
+                if ($res->successful()) {
+                    return response()->json(['success' => true, 'redirect' => route('task.index')]);
+                }
+
+                return response()->json(['success' => true, 'error' => 'Failed to process task in python server']);
+            }
+
+            return response()->json(['success' => false, 'error' => 'Failed to create task']);
+            // return response()->json(['success' => true, 'redirect' => route('task.index')]);
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return response()->json(['success' => false, 'error' => 'Failed to create task']);
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
+            // return response()->json(['success' => false, 'error' => 'Failed to create task']);
         }
     }
 
