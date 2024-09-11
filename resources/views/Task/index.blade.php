@@ -66,27 +66,29 @@
     <script>
         function markAsCompleted(taskId) {
             fetch(`/tasks/${taskId}/complete`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ is_done: true }) 
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    
-                    this.completed = true;
-                    // window.location.reload();
-                } else {
-                    alert('Failed to update task. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
-            });
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        is_done: true
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+
+                        // this.completed = true;
+                        window.location.reload();
+                    } else {
+                        alert('Failed to update task. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
         }
     </script>
 
