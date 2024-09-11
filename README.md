@@ -1,20 +1,54 @@
-# Generate README for a Laravel application running in Laravel Sail
-laravel_readme_content = """
-# Laravel Application Setup with Laravel Sail
+# Laravel Task Management Application
 
-This document provides the steps to install and set up the Laravel application using Laravel Sail, a lightweight command-line interface for interacting with Laravel's Docker environment.
+This is a simple task management application built with Laravel and running on Docker using Laravel Sail. The application allows users to create, manage, and complete tasks.
+
+## Features
+- Task Creation
+- Task Management
+- Mark Tasks as Completed
+- API for Task Management
 
 ## Prerequisites
+- Docker
+- Docker Compose
+- Composer
 
-Before proceeding, ensure you have the following installed on your system:
+## Installation
 
-- **Docker**: Laravel Sail requires Docker. You can download and install Docker from [here](https://www.docker.com/get-started).
-- **Composer**: Composer is a dependency manager for PHP. You can download and install Composer from [here](https://getcomposer.org/download/).
-
-## Installation Steps
-
-### 1. Clone the repository
-
+### 1. Clone the Repository
 ```bash
-git clone <your-repo-url>
-cd <project-directory>
+git clone git@github.com:kwadejeffrey/Laravel-Jazz.git
+cd Laravel-Jazz
+
+
+# Install PHP dependencies
+composer install
+
+# Install JavaScript dependencies
+npm install
+
+
+#Copy Env file
+cp .env.example .env
+
+
+#Update these variables
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:generated-key
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=sail
+DB_PASSWORD=password
+
+#Start application
+./vendor/bin/sail up -d
+
+#Run migration 
+./vendor/bin/sail artisan migrate
+

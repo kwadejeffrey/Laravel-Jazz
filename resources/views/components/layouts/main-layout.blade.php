@@ -29,14 +29,15 @@
             }
         </style>
 
-        {{-- @filamentStyles --}}
+        @filamentStyles
         @vite('resources/css/app.css')
     </head>
 
     <body class="antialiased" x-data="{ show: false, mobile: false, mobNav: false }">
         {{ $slot }}
 
-        {{-- @filamentScripts --}}
+        @livewire('notifications')
+        @filamentScripts
         @vite('resources/js/app.js')
     </body>
 

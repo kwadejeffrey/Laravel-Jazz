@@ -7,6 +7,7 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 
 class TaskController extends Controller
@@ -30,6 +31,7 @@ class TaskController extends Controller
 
     /**
      * Summary of create
+     * A method to create a new task and send it to python server for processing
      * @param \Illuminate\Http\Request $request
      * @return mixed|\Illuminate\Http\JsonResponse
      */
@@ -51,8 +53,8 @@ class TaskController extends Controller
                 $res = Http::post('http://host.docker.internal:5001/api/tasks', $data);
 
 
-
                 if ($res->successful()) {
+                    Notification::make()->title('Task created successfully')->body($res->json())->success()->send();
                     return response()->json(['success' => true, 'redirect' => route('task.index')]);
                 }
 
@@ -70,6 +72,7 @@ class TaskController extends Controller
 
     /**
      * Summary of markAsCompleted
+     * A method to mark a task as completed
      * @param mixed $id
      * @return mixed|\Illuminate\Http\JsonResponse
      */
