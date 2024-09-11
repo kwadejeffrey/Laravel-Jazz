@@ -45,7 +45,6 @@ class TaskController extends Controller
                 'is_done' => 'bool',
             ]);
 
-            // dd($data);
             $created = Task::create($data);
 
             if ($created) {
@@ -62,7 +61,6 @@ class TaskController extends Controller
             }
 
             return response()->json(['success' => false, 'error' => 'Failed to create task']);
-            // return response()->json(['success' => true, 'redirect' => route('task.index')]);
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return response()->json(['success' => false, 'error' => $e->getMessage()]);
